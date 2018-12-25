@@ -23,9 +23,22 @@ RSpec.describe User, type: :model do
         expect(user.errors[:last_name]).to include("can't be blank")
     end
 
-    it 'is invalid without an email'
-
-    it 'is invalid with a duplicate email'
+    it 'is invalid with a duplicate email' do
+        User.create(
+            first_name: 'user',
+            last_name: 'test',
+            email: 'test@gmail.com',
+            password: 'password'
+        )
+        user = User.new(
+            first_name: 'user',
+            last_name: 'test',
+            email: 'test@gmail.com',
+            password: 'password'
+        )
+        user.valid?
+        expect(user.errors[:email]).to include("has already been taken")
+    end
 
     it 'returns a user’s full name as a string'
 end
