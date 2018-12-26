@@ -17,7 +17,7 @@ module Projects
     config.generators do |g|
       g.test_framework :rspec,
       # テストデータベースにレコードを作成するファイルの作成をスキップする
-      fixtures: false,
+      # fixtures: false,
       # ビュースペックの作成をスキップする
       view_sepcs: false,
       helper_specs: false,
