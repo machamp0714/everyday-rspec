@@ -18,7 +18,22 @@ RSpec.describe ProjectsController, type: :controller do
             it 'returns a 200 response' do
                 sign_in @user
                 get :index
-                expect(response).to have_http_status 200
+                expect(response).to have_http_status "200"
+            end
+        end
+
+        # ゲストとして
+        context 'as a guest' do
+            # 302レスポンスを返すこと
+            it 'returns a 302 response' do
+                get :index
+                expect(response).to have_http_status "302"
+            end
+
+            # サインイン画面にリダイレクトすること
+            it 'redirects to the sign_in page' do
+                get :index
+                expect(response).to redirect_to "/users/sign_in"
             end
         end
     end
