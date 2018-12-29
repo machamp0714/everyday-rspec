@@ -115,6 +115,7 @@ RSpec.describe ProjectsController, type: :controller do
                 expect(@project.reload.name).to eq "New Project Name"
             end
         end
+
         context 'as an unauthorized user' do
             before do
                 @user = FactoryBot.create(:user)
@@ -133,6 +134,21 @@ RSpec.describe ProjectsController, type: :controller do
                 sign_in @user
                 patch :update, params: { id: @project.id, project: project_params }
                 expect(response).to redirect_to root_path
+            end
+        end
+
+        context 'as a guest' do
+            before do
+                @project = FactoryBot.create(:project)
+                @project_params = FactoryBot.attributes_for(:project)
+            end
+            it 'responses a 302 response' do
+                patch :update, params: { id: @project.id, project: @project_params }
+                expect(response).to have_http_status "302"
+            end
+            it 'redirects to the sign_in page' do
+                patch :update, params: { id: @project.id, project: @project_params }
+                expect(response).to redirect_to "/users/sign_in"
             end
         end
     end
