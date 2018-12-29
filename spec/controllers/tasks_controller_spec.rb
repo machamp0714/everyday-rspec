@@ -25,6 +25,18 @@ RSpec.describe TasksController, type: :controller do
                     params: { project_id: @project.id, task: new_task }
             }.to change(@project.tasks, :count).by(1)
         end
+
+        it 'requires authentication' do
+            new_task = { name: "New Task" }
+            expect {
+                post :create, format: :json, params: {
+                    project_id: @project.id, task: new_task
+                }
+            }.to_not change(@project.tasks, :count)
+            expect(response).to_not be_success
+        end
     end
+
+    
 
 end
