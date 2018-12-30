@@ -17,14 +17,15 @@ gem "activejob", ">= 5.1.6.1"
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'selenium-webdriver'
   gem 'rspec-rails', '~> 3.8.0'
   gem 'factory_bot_rails'
 end
 
 group :test do
-  gem 'capybara'
-  gem 'launchy'
+  gem 'capybara', '~> 2.15.4'
+  gem 'launchy', '~> 2.4.3'
+  gem 'chromedriver-helper'
+  gem 'selenium-webdriver'
 end
 
 group :development do
