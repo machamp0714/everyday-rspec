@@ -8,6 +8,7 @@ module LoginSupport
     end
 end
 
+# 新しく作ったモジュールをinclude
 RSpec.configure do |config|
     config.include LoginSupport
 end
