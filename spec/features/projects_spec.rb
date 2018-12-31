@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature "Projects", type: :feature do
+  let(:user) { FactoryBot.create(:user) }
+  let(:project) { FactoryBot.create(:project,
+    name: "Sample Project",
+    owner: user)
+  }
+
   # ユーザーは新しいプロジェクトを作成する
   scenario 'user creates a new project' do
     user = FactoryBot.create(:user)
@@ -18,5 +24,26 @@ RSpec.feature "Projects", type: :feature do
       expect(page).to have_content "Test Project"
       expect(page).to have_content "Owner: #{user.name}"
     end
+  end
+
+  # ユーザーがプロジェクトを編集する
+  scenario 'user updates the project' do
+    go_to_edit
+    update "A New Sample Project"
+    click_button "Update Project"
+    aggregate_failures do
+      expect(page).to have_content "Project was successfully updated."
+      expect(page).to have_content "A New Sample Project"
+    end
+  end
+
+  def go_to_edit
+    sign_in user
+    visit project_path(project)
+    click_link "Edit"
+  end
+
+  def update(name)
+    fill_in "Name", with: name
   end
 end
