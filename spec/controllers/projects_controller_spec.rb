@@ -11,14 +11,10 @@ RSpec.describe ProjectsController, type: :controller do
             it 'responses successfully' do
                 sign_in @user
                 get :index
-                expect(response).to be_success
-            end
-
-            # 200レスポンスをかえすこと
-            it 'returns a 200 response' do
-                sign_in @user
-                get :index
-                expect(response).to have_http_status "200"
+                aggregate_failures do
+                    expect(response).to be_success
+                    expect(response).to have_http_status "200"
+                end
             end
         end
 
