@@ -37,6 +37,11 @@ RSpec.feature "Projects", type: :feature do
     end
   end
 
+  # ユーザーはプロジェクトを完了済みにする
+  scenario 'user completes a project' do
+    
+  end
+
   def go_to_edit
     sign_in user
     visit project_path(project)
