@@ -47,7 +47,7 @@ RSpec.feature "Projects", type: :feature do
     expect(project.reload.completed?).to be true
     expect(page).to have_content "Congratulations, this project is complete!"
     expect(page).to have_content "Completed"
-    expect(page).to_not have_content "Complete"
+    expect(page).to_not have_button "Complete"
   end
 
   def go_to_edit
