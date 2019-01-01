@@ -43,6 +43,7 @@ RSpec.feature "Projects", type: :feature do
     project = FactoryBot.create(:project, owner: user)
     sign_in user
     visit project_path(project)
+    expect(page).to_not have_content "Completed"
     click_button "Complete"
     expect(project.reload.completed?).to be true
     expect(page).to have_content "Congratulations, this project is complete!"
