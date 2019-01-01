@@ -39,7 +39,15 @@ RSpec.feature "Projects", type: :feature do
 
   # ユーザーはプロジェクトを完了済みにする
   scenario 'user completes a project' do
-    
+    user = FactoryBot.create(:user)
+    project = FactoryBot.create(:project, owner: user)
+    sign_in user
+    visit project_path(project)
+    click_button "Complete"
+    expect(project.reload.completed?).to be true
+    expect(page).to have_content "Congratulations, this project is complete!"
+    expect(page).to have_content "Completed"
+    expect(page).to_not have_content "Complete"
   end
 
   def go_to_edit
